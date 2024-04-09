@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zoom Call</title>
+    <style>
+        #video-container {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        #video {
+            max-width: 100%;
+            max-height: 100vh;
+            display: inline-block;
+        }
+
+        #end-call-btn {
+            margin-top: 20px;
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.2/socket.io.js"></script>
+</head>
+
+
+<body>
+    <div id="video-container">
+        <h1>Zoom Call in Progress</h1>
+        <img id="video" src="" alt="Video Feed">
+    </div>
+
+    <audio id="audio" controls autoplay></audio>
+
+    <div style="text-align: center; margin-top: 50px;">
+        <form id="end-call-form" action="{{ url_for('end_zoom_call') }}" method="get">
+            <button id="end-call-btn" type="submit">End Call</button>
+        </form>
+    </div>
+
+    <script>
+        // サーバーとのWebSocket接続
+        var socket = io.connect('http://' + document.domain + ':' + location.port);
+
+        // video_feed イベントを受信したときに画像を更新
+        socket.on('video_feed', function(data) {
+            document.getElementById('video').src = 'data:image/jpg;base64, ' + data.frame;
+        });
+
+        // 音声の再生
+        socket.on('audio_feed', function(data) {
+            var audio = new Audio();
+            audio.src = 'data:audio/wav;base64,' + data.audio;
+            audio.play();
+        });
+
+    </script>
+    <audio src="music/test.mp3" controls></audio>
+    <!--
+    <script>
+        // カメラの取得と表示
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then((stream) => {
+                const video = document.getElementById('local-video');
+                video.srcObject = stream;
+            })
+            .catch((error) => {
+                console.error('Error accessing camera:', error);
+            });
+
+        // カメラストリームの停止
+        document.getElementById('end-call-form').addEventListener('submit', (event) => {
+            const video = document.getElementById('local-video');
+            const stream = video.srcObject;
+            const tracks = stream.getTracks();
+
+            tracks.forEach(track => track.stop());
+        });
+    </script> -->
+</body>
+</html>
