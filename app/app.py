@@ -24,8 +24,8 @@ audio_stream  = p.open( format=pyaudio.paInt16,
                         rate=44100,
                         input=True,
                         output = True, # inputとoutputを同時にTrueにする
-                        input_device_index=2,    # 使用する入力デバイスのインデックスを指定
-                        output_device_index=5,    # 使用する入力デバイスのインデックスを指定
+                        input_device_index=32,    # 使用する入力デバイスのインデックスを指定
+                        output_device_index=46,    # 使用する出力デバイスのインデックスを指定
                         frames_per_buffer=1024,
                         stream_callback=callback)
 # URLのルーティング

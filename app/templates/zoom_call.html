@@ -30,7 +30,7 @@
         <img id="video" src="" alt="Video Feed">
     </div>
 
-    <audio id="audio" controls autoplay></audio>
+    <!--  <audio id="audio" controls autoplay></audio> -->
 
     <div style="text-align: center; margin-top: 50px;">
         <form id="end-call-form" action="{{ url_for('end_zoom_call') }}" method="get">
@@ -48,14 +48,14 @@
         });
 
         // 音声の再生
-        socket.on('audio_feed', function(data) {
-            var audio = new Audio();
-            audio.src = 'data:audio/wav;base64,' + data.audio;
-            audio.play();
-        });
+        // socket.on('audio_feed', function(data) {
+        //     var audio = new Audio();
+        //     audio.src = 'data:audio/wav;base64,' + data.audio;
+        //     audio.play();
+        // });
 
     </script>
-    <audio src="music/test.mp3" controls></audio>
+    <!-- <audio src="music/test.mp3" controls></audio> -->
     <!--
     <script>
         // カメラの取得と表示
